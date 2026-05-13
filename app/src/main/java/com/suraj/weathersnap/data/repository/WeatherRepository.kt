@@ -6,7 +6,6 @@ import com.suraj.weathersnap.data.local.WeatherResponse
 import com.suraj.weathersnap.data.mapper.toEntity
 import com.suraj.weathersnap.data.mapper.toExternalModel
 import com.suraj.weathersnap.data.remote.GeocodingApiService
-import com.suraj.weathersnap.data.remote.RetrofitClient
 import com.suraj.weathersnap.data.remote.WeatherApiService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
