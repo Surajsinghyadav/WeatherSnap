@@ -14,9 +14,10 @@ import androidx.compose.ui.graphics.toArgb
 import com.suraj.weathersnap.Presentation.WeatherViewModel
 import com.suraj.weathersnap.navigation.WeatherSnapNavigation
 import com.suraj.weathersnap.ui.theme.WeatherSnapTheme
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : ComponentActivity() {
-    private val weatherViewModel : WeatherViewModel by viewModels()
+    private val weatherViewModel : WeatherViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

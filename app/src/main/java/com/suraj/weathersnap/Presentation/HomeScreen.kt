@@ -42,10 +42,11 @@ import com.suraj.weathersnap.ui.theme.TextMuted
 import com.suraj.weathersnap.ui.theme.TextPrimary
 import com.suraj.weathersnap.ui.theme.TextSecondary
 import com.suraj.weathersnap.ui.theme.WindTeal
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun HomeScreen(
-    viewModel: WeatherViewModel = viewModel(),
+    viewModel: WeatherViewModel = koinViewModel(),
     onNavigateToReports: () -> Unit,
     onNavigateToCreateReport: () -> Unit,
     padding: PaddingValues
@@ -146,12 +147,12 @@ fun HomeScreen(
                             .clip(RoundedCornerShape(30.dp))
                             .background(HeaderGreenLight)
                             .clickable {
-//                                viewModel.onSearch()
+                                viewModel.clearSuggestions()
                             }
                             .padding(horizontal = 20.dp, vertical = 12.dp)
                     ) {
                         Text(
-                            "Search",
+                            "Clear",
                             color = Color(0xFF1A2205),
                             fontWeight = FontWeight.Bold,
                             fontSize = 13.sp

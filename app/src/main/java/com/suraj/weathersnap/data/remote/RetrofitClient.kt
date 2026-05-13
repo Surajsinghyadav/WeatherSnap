@@ -5,7 +5,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
-
+import com.suraj.weathersnap.BuildConfig
 object RetrofitClient {
 
     // OkHttp client with logging (debug only)
@@ -13,9 +13,9 @@ object RetrofitClient {
         .addInterceptor(
             HttpLoggingInterceptor().apply {
                 level =
-//                    if (BuildConfig.DEBUG)
-//                    HttpLoggingInterceptor.Level.BODY
-//                else
+                    if (BuildConfig.DEBUG)
+                    HttpLoggingInterceptor.Level.BODY
+                else
                     HttpLoggingInterceptor.Level.NONE
             }
         )

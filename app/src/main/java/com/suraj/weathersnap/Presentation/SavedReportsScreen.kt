@@ -16,6 +16,9 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowUp
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -28,9 +31,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.R
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.suraj.weathersnap.data.local.SavedReport
@@ -50,18 +55,17 @@ import com.suraj.weathersnap.ui.theme.TempOrange
 import com.suraj.weathersnap.ui.theme.TextMuted
 import com.suraj.weathersnap.ui.theme.TextPrimary
 import com.suraj.weathersnap.ui.theme.TextSecondary
+import org.koin.androidx.compose.koinViewModel
 
 
 @Composable
 fun SavedReportsScreen(
-    viewModel: WeatherViewModel = viewModel(),
+    viewModel: WeatherViewModel = koinViewModel(),
     onBack: () -> Unit,
     padding: PaddingValues
 ) {
     val reports by viewModel.savedReports.collectAsState()
     val count   by viewModel.totalReportCount.collectAsState()
-
-
 
     Scaffold(topBar = {
         Row(
@@ -137,14 +141,6 @@ fun ReportCard(report: SavedReport) {
             .background(CardBackground, RoundedCornerShape(16.dp))
             .padding(16.dp)
     ) {
-        // Photo thumbnail
-//        Box(
-//            modifier = Modifier
-//                .fillMaxWidth()
-//                .height(160.dp)
-//                .clip(RoundedCornerShape(10.dp))
-//                .background(Color(0xFF0D1008))
-//        )
 
         if (report.imagePath.isNotEmpty()) {
             AsyncImage(
@@ -205,36 +201,36 @@ fun ReportCard(report: SavedReport) {
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(10.dp)
         ) {
-            Column(
-                modifier = Modifier
-                    .weight(1f)
-                    .background(ChipBackground, RoundedCornerShape(8.dp))
-                    .border(1.dp, DividerColor, RoundedCornerShape(8.dp))
-                    .padding(horizontal = 12.dp, vertical = 8.dp)
-            ) {
-                Text("Original", color = TextMuted, fontSize = 10.sp)
-                Text(
-                    "${report.originalSizeKb} KB",
-                    color = OriginalOrange,
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.SemiBold
-                )
-            }
-            Column(
-                modifier = Modifier
-                    .weight(1f)
-                    .background(ChipBackground, RoundedCornerShape(8.dp))
-                    .border(1.dp, DividerColor, RoundedCornerShape(8.dp))
-                    .padding(horizontal = 12.dp, vertical = 8.dp)
-            ) {
-                Text("Compressed", color = TextMuted, fontSize = 10.sp)
-                Text(
-                    "${report.compressedSizeKb} KB",
-                    color = CompressedTeal,
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.SemiBold
-                )
-            }
+//            Column(
+//                modifier = Modifier
+//                    .weight(1f)
+//                    .background(ChipBackground, RoundedCornerShape(8.dp))
+//                    .border(1.dp, DividerColor, RoundedCornerShape(8.dp))
+//                    .padding(horizontal = 12.dp, vertical = 8.dp)
+//            ) {
+//                Text("Original", color = TextMuted, fontSize = 10.sp)
+//                Text(
+//                    "${report.originalSizeKb} KB",
+//                    color = OriginalOrange,
+//                    fontSize = 14.sp,
+//                    fontWeight = FontWeight.SemiBold
+//                )
+//            }
+            SizeBadge(
+                label = "Original",
+                size = report.originalSizeKb,
+                color = OriginalOrange,
+                modifier = Modifier.weight(1f)
+
+            )
+            SizeBadge(
+                label = "Compressed",
+                size = report.compressedSizeKb,
+                color = CompressedTeal,
+                modifier = Modifier.weight(1f)
+
+            )
+
         }
 
         Spacer(Modifier.height(10.dp))
@@ -250,5 +246,28 @@ fun ReportCard(report: SavedReport) {
                 Text(report.reportNotes, color = TextSecondary, fontSize = 12.sp)
             }
         }
+    }
+}
+
+@Composable
+fun SizeBadge(
+    label : String,
+    size : Int,
+    color: Color,
+    modifier: Modifier = Modifier,
+){
+    Column(
+        modifier = modifier
+            .background(ChipBackground, RoundedCornerShape(8.dp))
+            .border(1.dp, DividerColor, RoundedCornerShape(8.dp))
+            .padding(horizontal = 12.dp, vertical = 8.dp)
+    ) {
+        Text(label, color = TextMuted, fontSize = 10.sp)
+        Text(
+            "$size KB",
+            color = color,
+            fontSize = 14.sp,
+            fontWeight = FontWeight.SemiBold
+        )
     }
 }

@@ -8,6 +8,7 @@ import androidx.room.Database
 import com.suraj.weathersnap.data.local.AppDatabase
 import com.suraj.weathersnap.data.local.CityResult
 import com.suraj.weathersnap.data.local.PhotoProperties
+import com.suraj.weathersnap.data.local.ReportsDao
 import com.suraj.weathersnap.data.local.ReportsEntity
 import com.suraj.weathersnap.data.local.SavedReport
 import com.suraj.weathersnap.data.local.WeatherData
@@ -23,8 +24,10 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class WeatherViewModel(application: Application) : AndroidViewModel(application) {
-
+class WeatherViewModel(application: Application,
+    private val weatherRepository : WeatherRepository,
+    private val reportsDao : ReportsDao
+) : AndroidViewModel(application) {
 
     private val _searchUiState = MutableStateFlow<SearchUiState>(SearchUiState.Ideal)
     val searchUiState = _searchUiState.asStateFlow()
@@ -32,13 +35,6 @@ class WeatherViewModel(application: Application) : AndroidViewModel(application)
 
     val weatherCardUiState = _weatherCardUiState.asStateFlow()
 
-
-
-    private val appDatabase = AppDatabase.getDatabase(application)
-    private val reportsDao =appDatabase.reportsDao()
-
-
-        private val weatherRepository = WeatherRepository()
     private val _cityQuery = MutableStateFlow("")
     val cityQuery: StateFlow<String> = _cityQuery.asStateFlow()
 

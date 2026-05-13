@@ -20,10 +20,11 @@ import com.suraj.weathersnap.Presentation.CreateReportScreen
 import com.suraj.weathersnap.Presentation.HomeScreen
 import com.suraj.weathersnap.Presentation.SavedReportsScreen
 import com.suraj.weathersnap.Presentation.WeatherViewModel
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun WeatherSnapNavigation(
-    weatherViewModel: WeatherViewModel = viewModel(),
+    weatherViewModel: WeatherViewModel = koinViewModel(),
     padding : PaddingValues
 ){
     val backStack = rememberNavBackStack(HomeScreen)
@@ -97,15 +98,12 @@ fun WeatherSnapNavigation(
 
             entry<CameraScreen> {
                 CameraScreen(
-                    onPhotoCaptured = { imagePath,
-                                        originalKb,
-                                        compressedKb ->
+                    onPhotoCaptured = { imagePath, originalKb,compressedKb ->
                         weatherViewModel.updatePhotoProperties(
                             imagePath,
                             originalKb,
                             compressedKb
                         )
-
                     },
                     onClose = onBackPressed
                 )

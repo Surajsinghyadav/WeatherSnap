@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
@@ -34,6 +35,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.max
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
@@ -56,10 +58,11 @@ import com.suraj.weathersnap.ui.theme.TextMuted
 import com.suraj.weathersnap.ui.theme.TextPrimary
 import com.suraj.weathersnap.ui.theme.TextSecondary
 import com.suraj.weathersnap.ui.theme.WindTeal
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun CreateReportScreen(
-    viewModel: WeatherViewModel = viewModel(),
+    viewModel: WeatherViewModel = koinViewModel(),
     onBack: () -> Unit,
     onSaved: () -> Unit,
     padding: PaddingValues,
@@ -191,40 +194,31 @@ fun CreateReportScreen(
 
                     Spacer(Modifier.height(16.dp))
 
-                    Box(
+                    Column(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(horizontal = 16.dp)
-                            .height(220.dp)
-                            .clip(RoundedCornerShape(12.dp))
+                            .background(CardBackground, RoundedCornerShape(16.dp))
+                            .padding(16.dp)
                     ) {
                         if (photoProperties != null) {
-                            // Show real captured image
                             AsyncImage(
                                 model = photoProperties.imagePath,
                                 contentDescription = "Captured",
-                                modifier = Modifier.fillMaxSize(),
+                                modifier = Modifier.fillMaxWidth().heightIn(max = 250.dp).clip(RoundedCornerShape(8.dp)),
                                 contentScale = ContentScale.Crop
                             )
-                            // Size info over the image
-                            Row(
-                                modifier = Modifier
-                                    .align(Alignment.BottomStart)
-                                    .padding(8.dp),
-                                horizontalArrangement = Arrangement.spacedBy(8.dp)
-                            ) {
-                                SizeBadge("Original: ${photoProperties.originalKb} KB", OriginalOrange)
-                                SizeBadge("Compressed: ${photoProperties.compressedKb} KB", CompressedTeal)
-                            }
+
                         } else {
                             Box(
                                 modifier = Modifier
-                                    .fillMaxSize()
+                                    .fillMaxWidth()
+                                    .heightIn(min =  200.dp)
+                                    .clip(RoundedCornerShape(8.dp))
                                     .background(
-                                        Brush.verticalGradient(
+                                        Brush.horizontalGradient(
                                             listOf(
                                                 Color(0xFF3A4A18),
-                                                Color(0xFF1E2810),
                                                 Color(0xFF2A3A14)
                                             )
                                         )
@@ -234,31 +228,49 @@ fun CreateReportScreen(
                                 Text("Photo preview", color = TextMuted, fontSize = 14.sp)
                             }
                         }
-                    }
 
-                    Spacer(Modifier.height(12.dp))
+                        Spacer(Modifier.height(12.dp))
 
-                    // Capture Photo Button (outlined)
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 16.dp)
-                            .background( color = HeaderGreenLight, RoundedCornerShape(24.dp))
+                        photoProperties?.let {
+                            Row(
+                                modifier = Modifier
+                                    .padding(8.dp),
+                                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                            ) {
+                                MetricChip("Original",
+                                    "${photoProperties.originalKb} Kb",OriginalOrange ,
+                                    Modifier.weight(1f))
+                                MetricChip("Compressed",  "${photoProperties.compressedKb} Kb" ,CompressedTeal,
+                                    Modifier.weight(1f))
+                            }
+                        }
+
+                        Spacer(Modifier.height(12.dp))
+
+                        // Capture Photo Button (outlined)
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 16.dp)
+                                .background( color = HeaderGreenLight, RoundedCornerShape(24.dp))
 //                            .border(1.dp, HeaderGreenLight, RoundedCornerShape(24.dp))
-                            .clickable(onClick = {
-                                onOpenCamera()
-                            })
-                            .padding(vertical = 14.dp),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        val btnName = photoProperties?.let { "Retake Photo" } ?: "Capture Photo"
-                        Text(
-                            btnName,
-                            color = Color(0xFF1A2205),
-                            fontSize = 15.sp,
-                            fontWeight = FontWeight.SemiBold
-                        )
+                                .clickable(onClick = {
+                                    onOpenCamera()
+                                })
+                                .padding(vertical = 14.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            val btnName = photoProperties?.let { "Retake Photo" } ?: "Capture Photo"
+                            Text(
+                                btnName,
+                                color = Color(0xFF1A2205),
+                                fontSize = 15.sp,
+                                fontWeight = FontWeight.SemiBold
+                            )
+                        }
                     }
+
+
 
                     Spacer(Modifier.height(16.dp))
 
@@ -343,13 +355,13 @@ fun CreateReportScreen(
 
 }
 
-@Composable
-fun SizeBadge(text: String, color: Color) {
-    Box(
-        modifier = Modifier
-            .background(Color.Black.copy(0.7f), RoundedCornerShape(6.dp))
-            .padding(horizontal = 8.dp, vertical = 4.dp)
-    ) {
-        Text(text, color = color, fontSize = 11.sp, fontWeight = FontWeight.SemiBold)
-    }
-}
+//@Composable
+//fun SizeBadge(text: String, color: Color) {
+//    Box(
+//        modifier = Modifier
+//            .background(Color.Black.copy(0.7f), RoundedCornerShape(6.dp))
+//            .padding(horizontal = 8.dp, vertical = 4.dp)
+//    ) {
+//        Text(text, color = color, fontSize = 11.sp, fontWeight = FontWeight.SemiBold)
+//    }
+//}

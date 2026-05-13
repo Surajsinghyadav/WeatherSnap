@@ -1,5 +1,7 @@
 package com.suraj.weathersnap.data.mapper
 
+import com.suraj.weathersnap.data.local.CityResult
+import com.suraj.weathersnap.data.local.CityResultEntity
 import com.suraj.weathersnap.data.local.ReportsEntity
 import com.suraj.weathersnap.data.local.SavedReport
 
@@ -31,5 +33,26 @@ fun ReportsEntity.toExternalModel() : SavedReport{
         compressedSizeKb = this.compressedSizeKb,
         reportNotes = this.reportNotes,
         imagePath = this.imagePath
+    )
+}
+
+
+fun CityResultEntity.toExternalModel() : CityResult{
+    return  CityResult(
+        id = this.id,
+        name = this.name,
+        latitude = this.latitude,
+        longitude = this.longitude,
+        country = this.country,
+    )
+}
+
+fun CityResult.toEntity() : CityResultEntity{
+    return CityResultEntity(
+        id = this.id,
+        name = this.name,
+        latitude = this.latitude,
+        longitude = this.longitude,
+        country = this.country,
     )
 }
