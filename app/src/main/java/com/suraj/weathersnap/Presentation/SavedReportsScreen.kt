@@ -201,32 +201,18 @@ fun ReportCard(report: SavedReport) {
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(10.dp)
         ) {
-//            Column(
-//                modifier = Modifier
-//                    .weight(1f)
-//                    .background(ChipBackground, RoundedCornerShape(8.dp))
-//                    .border(1.dp, DividerColor, RoundedCornerShape(8.dp))
-//                    .padding(horizontal = 12.dp, vertical = 8.dp)
-//            ) {
-//                Text("Original", color = TextMuted, fontSize = 10.sp)
-//                Text(
-//                    "${report.originalSizeKb} KB",
-//                    color = OriginalOrange,
-//                    fontSize = 14.sp,
-//                    fontWeight = FontWeight.SemiBold
-//                )
-//            }
-            SizeBadge(
+
+            MetricChip(
                 label = "Original",
-                size = report.originalSizeKb,
-                color = OriginalOrange,
+                value = "${report.originalSizeKb} Kb",
+                valueColor = OriginalOrange,
                 modifier = Modifier.weight(1f)
 
             )
-            SizeBadge(
+            MetricChip(
                 label = "Compressed",
-                size = report.compressedSizeKb,
-                color = CompressedTeal,
+                value = "${report.compressedSizeKb} Kb",
+                valueColor = CompressedTeal,
                 modifier = Modifier.weight(1f)
 
             )

@@ -354,14 +354,3 @@ fun CreateReportScreen(
 
 
 }
-
-//@Composable
-//fun SizeBadge(text: String, color: Color) {
-//    Box(
-//        modifier = Modifier
-//            .background(Color.Black.copy(0.7f), RoundedCornerShape(6.dp))
-//            .padding(horizontal = 8.dp, vertical = 4.dp)
-//    ) {
-//        Text(text, color = color, fontSize = 11.sp, fontWeight = FontWeight.SemiBold)
-//    }
-//}
