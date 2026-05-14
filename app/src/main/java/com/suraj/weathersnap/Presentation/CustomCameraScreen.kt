@@ -43,7 +43,6 @@ fun CameraScreen(
 ) {
     val context = LocalContext.current
 
-    // Check if permission is already granted
     var hasPermission by remember {
         mutableStateOf(
             ContextCompat.checkSelfPermission(
@@ -52,14 +51,12 @@ fun CameraScreen(
         )
     }
 
-    // Permission launcher — shows the system permission dialog
     val permissionLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestPermission()
     ) { isGranted ->
         hasPermission = isGranted
     }
 
-    // Ask for permission as soon as screen opens
     LaunchedEffect(Unit) {
         if (!hasPermission) {
             permissionLauncher.launch(Manifest.permission.CAMERA)
@@ -71,13 +68,11 @@ fun CameraScreen(
         .background(Color.Black)) {
 
         if (hasPermission) {
-            // ── Show camera only after permission granted ──
             CameraContent(
                 onPhotoCaptured = onPhotoCaptured,
                 onClose = onClose
             )
         } else {
-            // ── Show permission denied UI ──
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -100,7 +95,6 @@ fun CameraScreen(
                     textAlign = TextAlign.Center
                 )
                 Spacer(Modifier.height(24.dp))
-                // Allow user to retry permission
                 Box(
                     modifier = Modifier
                         .clip(RoundedCornerShape(30.dp))
@@ -129,7 +123,6 @@ fun CameraScreen(
     }
 }
 
-// ── Actual Camera UI — only shown when permission is granted ─────
 
 @Composable
 private fun CameraContent(
@@ -147,7 +140,6 @@ private fun CameraContent(
 
     Box(modifier = Modifier.fillMaxSize()) {
 
-        // Live Preview
         AndroidView(
             modifier = Modifier.fillMaxSize(),
             factory = { ctx ->
@@ -173,7 +165,6 @@ private fun CameraContent(
             }
         )
 
-        // Top Bar
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -199,8 +190,6 @@ private fun CameraContent(
                 Text("Close", color = Color.White, fontSize = 13.sp)
             }
         }
-
-        // Capture Button
         Box(
             modifier = Modifier
                 .fillMaxWidth()

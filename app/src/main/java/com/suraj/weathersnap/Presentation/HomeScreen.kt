@@ -107,7 +107,6 @@ fun HomeScreen(
         ) {
             Spacer(Modifier.height(16.dp))
 
-            // ── Search ──────────────────────────────────────────────
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -139,7 +138,7 @@ fun HomeScreen(
                         singleLine = true,
                         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
                         keyboardActions = KeyboardActions(onSearch = {
-//                            viewModel.onSearch()
+                            viewModel.clearSuggestions()
                         })
                     )
                     Box(
@@ -256,7 +255,6 @@ fun HomeScreen(
 
 }
 
-// ── Shared Composables ───────────────────────────────────────────
 
 @Composable
 fun WeatherCard(
@@ -272,7 +270,6 @@ fun WeatherCard(
     ) {
         when (weatherCardUiState) {
             is WeatherCardUiState.Ideal -> {
-//               val gradient = Brush.
 
                 Column(
                     Modifier

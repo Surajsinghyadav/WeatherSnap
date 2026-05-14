@@ -247,7 +247,6 @@ fun CreateReportScreen(
 
                         Spacer(Modifier.height(12.dp))
 
-                        // Capture Photo Button (outlined)
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -274,7 +273,6 @@ fun CreateReportScreen(
 
                     Spacer(Modifier.height(16.dp))
 
-                    // Field Notes
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -312,7 +310,6 @@ fun CreateReportScreen(
 
                     Spacer(Modifier.height(16.dp))
 
-                    // Save Report
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()

@@ -41,9 +41,6 @@ class WeatherViewModel(application: Application,
     private val _suggestions = MutableStateFlow<List<String>>(emptyList())
     val suggestions: StateFlow<List<String>> = _suggestions.asStateFlow()
 
-//    private val _weather = MutableStateFlow<WeatherData?>(WeatherData())
-//    val weather: StateFlow<WeatherData?> = _weather.asStateFlow()
-
     private val _photoProperties = MutableStateFlow<PhotoProperties?>(null)
     val PhotoProperties = _photoProperties.asStateFlow()
 
@@ -98,7 +95,6 @@ class WeatherViewModel(application: Application,
 
                 } catch (e: Exception) {
                     _searchUiState.value = SearchUiState.Error("Error")
-//                    emptyList()
                 }
             }
 

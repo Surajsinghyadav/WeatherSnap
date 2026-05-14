@@ -35,7 +35,7 @@ data class PhotoProperties(
 )
 
 data class GeocodingResponse(
-    val results: List<CityResult>?  // nullable — API returns null if no results
+    val results: List<CityResult>?
 )
 
 data class CityResult(
@@ -51,11 +51,7 @@ enum class CameraState {
     PROCESSING
 }
 
-data class SearchSuggestion(
-    val name: String
-)
 
-// For weather response
 data class WeatherResponse(
     val current: CurrentWeather
 )
